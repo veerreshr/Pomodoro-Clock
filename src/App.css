@@ -61,3 +61,7 @@ h1 {
 #reset {
   margin: 8px;
 }
+.red {
+  color: red;
+  border-color: red;
+}
