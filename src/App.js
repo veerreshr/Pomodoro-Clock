@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowUp,
@@ -9,6 +8,7 @@ import {
   faSyncAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import "./App.css";
+import beep from "./beep.mp3";
 
 function App() {
   const initialState = {
@@ -22,8 +22,7 @@ function App() {
   const [state, setstate] = useState(initialState);
   const clock = () => {
     if (state.session_active) {
-      if (state.complete_seconds == 0) {
-        console.log("1");
+      if (state.complete_seconds === 0) {
         setstate((prev) => ({
           ...prev,
           start: true,
@@ -33,7 +32,6 @@ function App() {
         audiobeep.play();
         return;
       } else {
-        console.log("2");
         setstate((prev) => {
           return {
             ...prev,
@@ -43,7 +41,6 @@ function App() {
         });
       }
     } else {
-      console.log("3");
       if (state.complete_seconds === 0) {
         setstate((prev) => {
           return {
@@ -54,7 +51,6 @@ function App() {
           };
         });
       } else {
-        console.log("4");
         setstate((prev) => {
           return {
             ...prev,
@@ -63,6 +59,9 @@ function App() {
           };
         });
       }
+    }
+    if (state.complete_seconds < 0) {
+      audiobeep.play();
     }
   };
   const play = () => {
@@ -180,7 +179,7 @@ function App() {
       <audio
         id="beep"
         preload="auto"
-        src="https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav"
+        src={beep}
         ref={(audio) => {
           audiobeep = audio;
         }}
